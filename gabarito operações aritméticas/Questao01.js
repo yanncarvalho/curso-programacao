@@ -29,4 +29,4 @@ async function main() {
     process.exit();
 }
 
-main();
+main(); 
