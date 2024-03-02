@@ -29,8 +29,9 @@ async function main() {
     const age = Number(ageStr)
     let result  = ''
 
+
     if (age >= 18){
-        result +=  'city councilor'
+        result += 'city councilor'
     } 
 
     if (age >= 21){
@@ -41,16 +42,14 @@ async function main() {
         result += ', governador, vice-governador'
     } 
     
-
     if (age >= 35){
         result += ', president, vice-president, senator'
-    } 
+    }
     
-    result = result || 'you are underage'
     if(result){
         console.log('You can be '+result)
     } else{
-        console.log(result)
+        console.log('you are underage')
     }
   
  
