@@ -27,38 +27,21 @@ function input(message) {
 
 async function main() {
     const randomNum = Math.floor(Math.random() * 101);
-    
-    let guessStr = await input('1# attempt - guess the number: ');
-    let guess = Number(guessStr);
-
-    let won = randomNum === guess;
-
-    if (!won){
+    console.log(randomNum)
+    let guess, i = 1;
+    do{
+        let guessStr  = await input(i+'# attempt - guess the number: ');
+        guess = Number(guessStr);
         if(guess > randomNum){
-            console.log('The number is lower than', guessStr);
-        } else {
-            console.log('The number is higher than', guessStr);
+            console.log('The number is smaller than', guessStr);
+        } else if (guess < randomNum){
+            console.log('The number is bigger than', guessStr);
         }
- 
-
-       guessStr = await input('2# attempt - guess the number: ');
-       guess = Number(guessStr);
-       won = randomNum === guess;
-       if (!won){
-           if(guess > randomNum){
-              console.log('The number is lower than', guessStr);
-            } else {
-              console.log('The number is higher than', guessStr);
-            }
-
-            guessStr = await input('3# attempt - guess the number: ');
-            guess = Number(guessStr);
-            won = randomNum === guess;
+        i++
+    }while(i < 10 && guess !== randomNum)
     
-        }
-    }
-   
-    if (!won){
+
+    if (guess !== randomNum){
         console.log('The number was '+ randomNum);
     } else {
         console.log('You guessed the number '+ randomNum+'!');
