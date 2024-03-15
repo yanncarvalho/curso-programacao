@@ -36,7 +36,7 @@ async function main() {
     let win = false;
 
     do {
-        player = (player == 'X') ? 'O' : 'X';
+        player = (player === 'X') ? 'O' : 'X';
 
         console.log();
         console.log(m[0][0] || 1, '|', m[0][1] || 2, '|', m[0][2] || 3)
@@ -53,7 +53,7 @@ async function main() {
         if (!invalidOp) {
 
             i = Math.ceil(op / 3) - 1;
-            j = (op % 3 || 3)  - 1;
+            j = (op % 3 || 3) - 1;
         }
 
         if (invalidOp || m[i][j]) {
