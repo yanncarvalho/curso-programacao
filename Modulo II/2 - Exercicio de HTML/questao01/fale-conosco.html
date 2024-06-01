@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <title>Instituição XYZ</title>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="./assets/img/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <img src="./assets/img/logo.png" alt="Imagem da Instituição XYZ" />
+
+    <!-- Cabeçalho -->
+    <header>
+      <h1>Instituição XYZ</h1>
+      <nav>
+        <a href="./index.html">Página Inicial</a> 
+      </nav>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main>
+        <h2>Fale Conosco</h2>
+        <form>
+            <label for="name">Nome:</label><br>
+            <input type="text" id="name" name="name" required><br><br>
+            
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required><br><br>
+            
+            <label for="phone">Telefone:</label><br>
+            <input type="tel" id="phone" name="phone"><br><br>
+            
+            <label for="subject">Assunto:</label><br>
+            <select id="subject" name="subject" required>
+                <option value="duvida">Dúvida</option>
+                <option value="reclamacao">Reclamação</option>
+                <option value="sugestao">Sugestão</option>
+                <option value="elogio">Elogio</option>
+            </select><br><br>
+            
+            <label for="message">Mensagem:</label><br>
+            <textarea id="message" name="message" rows="5" required></textarea><br><br>
+            
+            <input type="submit" text ="Enviar" >
+        </form>
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+      <p>&copy; 2024 Instituição XYZ. Todos os direitos reservados.</p>
+    </footer>
+  </body>
+</html>
