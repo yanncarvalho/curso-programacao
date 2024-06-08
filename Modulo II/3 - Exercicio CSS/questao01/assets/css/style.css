@@ -1,0 +1,98 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+body {
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.header {
+  background-color: #efede9;
+  color: #fff;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.footer {
+  text-align: center;
+  padding: 10px 0;
+  background-color: #333;
+  color: #fff;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+}
+
+.logo {
+  width: 250px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.title {
+  margin: 0;
+  color: #9c201b;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.title span {
+  color: black;
+}
+
+.nav {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: #333;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+}
+
+.main {
+  padding: 20px;
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+  color: #333;
+}
+
+.form-label {
+  margin-top: 10px;
+}
+
+.form-input {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.form-select {
+  width: 100%;
+}
+
+.form-text {
+  width: 97%;
+}
+.form-submit {
+  width: 100px;
+  padding: 10px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+}

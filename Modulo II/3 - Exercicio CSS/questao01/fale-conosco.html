@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <title>Instituição XYZ</title>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="./assets/img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./assets/css/normalize.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <!-- Cabeçalho -->
+    <header class="header">
+      <img
+        src="./assets/img/logo.png"
+        alt="Imagem da Instituição XYZ"
+        class="logo"
+      />
+
+      <h1 class="title">Instituição <span>XYZ</span></h1>
+    </header>
+    <nav class="nav">
+      <a href="./index.html">Página Inicial</a> |
+      <a href="./index.html#sobre">Sobre Nós</a> |
+      <a href="./index.html#servicos">Serviços</a> |
+      <a href="./index.html#contato">Contato</a>
+    </nav>
+    <!-- Conteúdo principal -->
+    <main class="main">
+      <h2 id="fale-conosco" class="subtitle">Fale Conosco</h2>
+      <form>
+        <label for="name" class="form-label">Nome:</label>
+        <input type="text" id="name" name="name" class="form-input form-text" required />
+
+        <label for="email" class="form-label">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="form-input form-text"
+          required
+        />
+
+        <label for="phone" class="form-label">Telefone:</label>
+        <input type="tel" id="phone" name="phone" class="form-input form-text" />
+
+        <label for="subject" class="form-label">Assunto:</label>
+        <select id="subject" name="subject" class="form-input form-select" required>
+          <option value="duvida">Dúvida</option>
+          <option value="reclamacao">Reclamação</option>
+          <option value="sugestao">Sugestão</option>
+          <option value="elogio">Elogio</option>
+        </select>
+
+        <label for="message" class="form-label">Mensagem:</label>
+        <textarea
+          id="message"
+          name="message"
+          rows="5"
+          class="form-input form-text"
+          required
+        ></textarea>
+
+        <input type="submit" value="Enviar" class="form-submit" />
+      </form>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+      <p>&copy; 2024 Instituição XYZ. Todos os direitos reservados.</p>
+    </footer>
+  </body>
+</html>
