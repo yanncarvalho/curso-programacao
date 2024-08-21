@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notebook manager</title>
+</head>
+<body>
+    <h1>Notebook manager</h1>
+
+    <nav>
+        <button type="button" id="getAllPageable" onclick="getNotebooks(0)">Get Notebooks</button> |
+        <input type="text" id="searchById" placeholder=" Inform an Id">
+        <button type="button" id="btnById" onclick="addSingleNotebook()" >Search id</button> |  
+        <button type="button" id="createNotebook" onclick="addMainDivNewNotebookTemplate()">Create new notebook</button>
+    </nav>
+
+    <div id="notebooks">
+    </div> 
+
+    <script>
+        let currentPage = 0;
+
+          const USDollar = new Intl.NumberFormat('en-US', {
+                 style: 'currency',
+                           currency: 'USD',
+            });
+
+        const mainDiv = document.getElementById("notebooks")
+        const searchText = document.getElementById("searchById")
+        const basebeurl = "http://localhost:8080/api/notebooks";
+        const intervalPage = 5;
+        const btnPageable =  document.getElementById("getAllPageable");
+
+        async function addSingleNotebook(){
+            const idStr = searchText.value;
+            const id = Number(idStr);
+            if(!(idStr.trim()) || !Number.isInteger(id) || Number.isNaN(id)){
+                alert(idStr+" is a valid integer number");
+                return;
+            }
+            const result = await getNotebookById(id);
+
+            btnPageable.disabled = false;
+          
+            if (Object.keys(result).length === 0){
+                alert("id not found");
+                mainDiv.innerHTML = ""
+                return;
+            }
+
+            mainDiv.innerHTML = " <br> " + notebookTemplate(result)
+
+    
+        }
+
+        async function getNotebooks(currentPage){
+            const result = await getNotebookPageable(currentPage, intervalPage);
+            if(result.length === 0){
+                alert("something wrong happened")
+            }
+            currNotebooks = result;
+            mainDiv.innerHTML = " <br> "
+                                +   result.map(d => notebookTemplate(d)).reduce((acc, curr) => acc.concat(curr)) 
+                                + " <br> " 
+                                + pageButtonTemplate(currentPage)
+       
+             
+            document.getElementById("nextPage").disabled =  (await getNotebookPageable(currentPage+1, intervalPage)).length === 0
+            document.getElementById("previousPage").disabled = (currentPage === 0);
+            document.getElementById("currentPage").value = currentPage+1;
+            btnPageable.disabled = true;
+            this.currentPage = currentPage;
+        }
+
+        function changeCurrentPage(currentPage){
+            document.getElementById("currentPage").value = currentPage;
+        }
+
+       async function getNotebookPageable(page, pageSize){
+            const response = await fetch(`${basebeurl}?page=${page}&pageSize=${pageSize}`);
+            if(!response.ok){
+                return [];
+            }
+            const data = await response.json();
+            return data?._embedded?.noteBookList ?? []
+       }
+
+       async function getNotebookById(id){
+            const response = await fetch(`${basebeurl}/${id}`);
+            if(!response.ok){
+                return {};
+            }
+            const data = await response.json();
+            return data ?? {}
+       }
+
+       function validate(currPriceStr, name){
+        
+        const currPrice = parseFloat(currPriceStr);
+           if(Number.isNaN(currPrice)){
+               return {hasError:true, msg: currPriceStr+" is a valid price"};
+           }
+           if(name.trim() === ''){
+               return {hasError:true, msg: "name must be informed"};
+           }
+           return {hasError:false, msg: "valid"};
+       }
+       async function updateNotebook(id){
+            const name = document.getElementById(id+"new_notebookName").value
+            const currPriceStr = document.getElementById(id+"_notebookcurrentPrice").value
+            const valid = validate(currPriceStr, name)
+            if(valid.hasError){
+                alert(valid.msg);
+                return;
+            }
+           const response = await fetch(`${basebeurl}/${id}`,{
+            method:"PATCH",
+            headers: new Headers({'content-type': 'application/json'}),
+            body: JSON.stringify({ "name": name,  "currentPrice": currPrice }),
+           });
+
+           if(!response.ok){
+              defaultErrorMsg();
+              return
+           }
+           const data = await response.json();
+           if(!data){
+              defaultErrorMsg();
+              return
+           }
+
+           alert("Update done successfully!")
+           document.getElementById(id+"_notebooklastUpdate").value = data.lastUpdate;
+       }
+
+
+        async function deleteNotebook(id){
+
+            const mustRemove = confirm('Do you want to delete this register?');
+            if(!mustRemove){
+                return;
+            }
+    
+
+            const response = await fetch(`${basebeurl}/${id}`, { method:"DELETE" },);
+
+           if(response.status === 202){
+
+              alert("delete successfully!");
+              const child = document.getElementById(id+"_notebookDiv");
+              mainDiv.removeChild(child)
+              btnPageable.disabled = false;
+              return
+           }
+
+           if(response.status === 404){
+              alert("not found this id!");
+              return
+           }
+
+           defaultErrorMsg();
+        }
+
+        function defaultErrorMsg(){
+            alert("something wrong happened");
+        }
+
+
+
+       async function saveNotebook(){
+            const name = document.getElementById("new_notebookName").value
+            const currPriceStr = document.getElementById("new_notebookcurrentPrice").value
+
+            const valid = validate(currPriceStr, name)
+            if(valid.hasError){
+                alert(valid.msg);
+                return;
+            }
+            
+            const response = await fetch(basebeurl,{
+                 method:"POST",
+                 headers: new Headers({'content-type': 'application/json'}),
+                 body: JSON.stringify({ "name": name,  "currentPrice": currPriceStr }),
+           });
+           if(!response.ok){
+              defaultErrorMsg();
+              return
+           }
+           const data = await response.json();
+           if(!data){
+              defaultErrorMsg();
+              return
+           }
+            alert('Salvo com sucesso!');
+            mainDiv.innerHTML = '<br>'+notebookTemplate(data)
+
+        }
+ 
+
+        function pageButtonTemplate (currentPage) { 
+            return ` <button type="button" id="previousPage" onclick="getNotebooks(${currentPage}-1)")>Previous</button>
+                     <input id="currentPage" type="text" readonly  style="width:15px; text-align:center;">
+                    <button type="button" id="nextPage" onclick="getNotebooks(${currentPage}+1)">Next</button>`
+        }
+
+        function notebookTemplate(data){
+            return `
+            <div id=${data.id}_notebookDiv>
+              <label for="${data.id}_notebookId"">Id:</label>                      <input id="${data.id}_notebookId" type="text" readonly value="${data.id ?? ''}">
+              <label for="${data.id}_notebookName">Name:</label>                   <input id="${data.id}_notebookName" type="text" value="${data.name ?? ''}">
+              <label for="${data.id}_notebookcurrentPrice">Current Price:</label>  <input id="${data.id}_notebookcurrentPrice" type="text" value="${USDollar.format(data.currentPrice ?? '0')}">
+              <label for="${data.id}_notebooklastUpdate">Last Update:</label>      <input id="${data.id}_notebooklastUpdate" type="datetime" readonly value="${new Date(data.lastUpdate).toLocaleString() ?? ''}">
+              <input id="${data.id}_updateBtn" type="button" readonly value="Update" onclick="updateNotebook(${data.id})">
+               <input id="${data.id}_deleteBtn" type="button" readonly value="Delete" onclick="deleteNotebook(${data.id})">
+            </div>
+         `
+        }
+
+        function addMainDivNewNotebookTemplate(){
+           mainDiv.innerHTML = ` <br>
+            <div id=new_notebookDiv>
+              <label for="new_notebookName">Name:</label>                   <input id="new_notebookName" type="text">
+              <label for="new_notebookcurrentPrice">Current Price:</label>  <input id="new_notebookcurrentPrice" type="number">
+              <input id="save_updateBtn" type="button" readonly value="Save" onclick="saveNotebook()">
+            </div>
+         `
+        }
+    </script>
+
+    
+</body>
+</html>
