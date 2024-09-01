@@ -8,9 +8,10 @@ body {
   background-color: #f4f4f4;
 }
 
+
 .header {
   background-color: #efede9;
-  color: #fff;
+  color: #fff !important;
   padding: 1rem 0;
   text-align: center;
 }
@@ -31,7 +32,7 @@ body {
   margin: 0px;
 }
 
-.title {
+.title ~ a {
   margin: 0;
   color: #9c201b;
   text-transform: uppercase;
