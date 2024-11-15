@@ -1,3 +1,15 @@
+/*Questão 4.  Um cache com TTL (Time to Live) é uma técnica de armazenamento temporário de dados, 
+onde os dados são mantidos por um período específico de tempo antes de expirarem. 
+O TTL define o tempo em que os dados podem ser armazenados no cache, após o qual eles são automaticamente removidos ou marcados como obsoletos. 
+
+Crie uma classe chamada Cache que receberá o TTL em milissegundos ao ser inicializada, 
+a classe armazenará o cache em uma estrutura de chave-valor e conterá os seguintes métodos:
+set(key, value): adiciona uma chave e um valor ao cache, iniciando a contagem do TTL (Time to Live).
+get(key): retorna o valor associado a uma chave. Se o valor não for encontrado, retorna undefined. Se o TTL tiver expirado, o valor será removido e o método retornará undefined (lazy strategy). Se o valor existir e o TTL não tiver expirado, o valor será retornado.
+remove(key): remove um valor a partir de sua chave.
+removeExpired(): remove todos os valores cujo TTL tenha expirado.
+*/
+
 const Cache = require('./Cache');
 
 // Create an instance of the Cache with TTL of 1000 milliseconds (1 second)

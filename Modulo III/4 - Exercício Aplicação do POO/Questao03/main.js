@@ -1,3 +1,7 @@
+/*Questão 3. Crie uma classe chamada Duple que, ao ser inicializada, receberá dois elementos de tipo primitivo. 
+Esses elementos devem ser imutáveis, ou seja, não poderão ser alterados após a criação da instância. 
+Além disso, a classe deve conter um método para comparar a instância atual com outra dupla, 
+verificando se ambos os elementos são iguais ou não. lembre-se: (a1,a2) ≠ (a2,a1)*/
 const Duple = require('./Duple');
 
 const duple1 = new Duple(1, 'A');
